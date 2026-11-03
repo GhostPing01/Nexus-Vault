@@ -343,38 +343,38 @@ export default function AIConfigModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-[2px] animate-in fade-in duration-150 select-none"
+      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/50 backdrop-blur-[2px] animate-in fade-in duration-150 select-none"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
     >
       <div
-        className="relative w-full max-w-2xl bg-white dark:bg-[#151518] border border-[#E3E5DF] dark:border-[#272A32] rounded-2xl shadow-2xl flex flex-col max-h-[90vh] overflow-hidden animate-in zoom-in-95 duration-150"
+        className="relative w-full max-w-2xl bg-white dark:bg-[#151518] border border-[#E3E5DF] dark:border-[#272A32] rounded-2xl shadow-2xl flex flex-col max-h-[92vh] overflow-hidden animate-in zoom-in-95 duration-150"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header Bar */}
-        <div className="px-6 py-4 border-b border-[#E3E5DF] dark:border-[#26262c] flex items-center justify-between bg-[#F7F7F4] dark:bg-[#111113] shrink-0">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-emerald-500/10 dark:bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-[#287D54] dark:text-emerald-400 shadow-2xs">
-              <Bot className="w-5 h-5" />
+        <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-[#E3E5DF] dark:border-[#26262c] flex items-center justify-between bg-[#F7F7F4] dark:bg-[#111113] shrink-0 gap-2">
+          <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+            <div className="w-8 sm:w-9 h-8 sm:h-9 rounded-xl bg-emerald-500/10 dark:bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-[#287D54] dark:text-emerald-400 shadow-2xs shrink-0">
+              <Bot className="w-4 sm:w-5 h-4 sm:h-5" />
             </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h2 className="text-base font-semibold text-[#242824] dark:text-[#f4f4f5]">
+            <div className="min-w-0">
+              <div className="flex items-center gap-2 flex-wrap">
+                <h2 className="text-sm sm:text-base font-semibold text-[#242824] dark:text-[#f4f4f5] truncate">
                   AI Model & API Key Configuration
                 </h2>
                 <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/10 text-[#287D54] dark:text-emerald-400 border border-emerald-500/20 font-medium">
                   Universal Hub
                 </span>
               </div>
-              <p className="text-xs text-[#666B65] dark:text-[#8e8e98] mt-0.5">
+              <p className="text-xs text-[#666B65] dark:text-[#8e8e98] mt-0.5 truncate hidden sm:block">
                 Configure your API key to run note synthesis and intelligent link discoveries.
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-[#666B65] hover:text-[#242824] dark:text-[#8e8e98] dark:hover:text-[#f4f4f5] hover:bg-[#EAECE6] dark:hover:bg-[#202227] transition-colors cursor-pointer"
+            className="p-1.5 rounded-lg text-[#666B65] hover:text-[#242824] dark:text-[#8e8e98] dark:hover:text-[#f4f4f5] hover:bg-[#EAECE6] dark:hover:bg-[#202227] transition-colors cursor-pointer shrink-0"
             title="Close (Esc)"
           >
             <X className="w-4 h-4" />

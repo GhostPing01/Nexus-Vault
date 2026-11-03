@@ -209,25 +209,25 @@ export default function NoteSynthesisModal({
   if (!isOpen || !file) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-[2px] animate-in fade-in duration-200">
-      <div className="bg-white dark:bg-[#151518] border border-[#E3E5DF] dark:border-[#2b2b34] rounded-2xl shadow-xl w-full max-w-4xl max-h-[90vh] flex flex-col overflow-hidden text-[#242824] dark:text-[#f4f4f5]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/40 backdrop-blur-[2px] animate-in fade-in duration-200">
+      <div className="bg-white dark:bg-[#151518] border border-[#E3E5DF] dark:border-[#2b2b34] rounded-2xl shadow-xl w-full max-w-4xl max-h-[92vh] flex flex-col overflow-hidden text-[#242824] dark:text-[#f4f4f5]">
         
         {/* Header Bar */}
-        <div className="px-6 py-4 border-b border-[#E3E5DF] dark:border-[#26262c] flex items-center justify-between bg-[#F7F7F4] dark:bg-[#121214] shrink-0">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-[#E7A23B]/15 border border-[#E7A23B]/30 flex items-center justify-center shadow-inner">
-              <Zap className="w-5 h-5 text-[#E7A23B]" />
+        <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-[#E3E5DF] dark:border-[#26262c] flex items-center justify-between bg-[#F7F7F4] dark:bg-[#121214] shrink-0 gap-2">
+          <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+            <div className="w-8 sm:w-9 h-8 sm:h-9 rounded-xl bg-[#E7A23B]/15 border border-[#E7A23B]/30 flex items-center justify-center shadow-inner shrink-0">
+              <Zap className="w-4 sm:w-5 h-4 sm:h-5 text-[#E7A23B]" />
             </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h2 className="text-base font-semibold text-[#242824] dark:text-[#f4f4f5] tracking-tight">
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                <h2 className="text-sm sm:text-base font-semibold text-[#242824] dark:text-[#f4f4f5] tracking-tight truncate">
                   Academic Note Synthesizer
                 </h2>
-                <span className="text-[11px] font-mono px-2 py-0.5 rounded-full bg-[#E7A23B]/15 text-[#B47818] dark:text-amber-300 border border-[#E7A23B]/30 font-medium">
+                <span className="text-[10px] sm:text-[11px] font-mono px-2 py-0.5 rounded-full bg-[#E7A23B]/15 text-[#B47818] dark:text-amber-300 border border-[#E7A23B]/30 font-medium truncate">
                   {activeProvider.toUpperCase()} • {activeModel}
                 </span>
               </div>
-              <p className="text-xs text-[#666B65] dark:text-[#a1a1aa] mt-0.5">
+              <p className="text-xs text-[#666B65] dark:text-[#a1a1aa] mt-0.5 truncate hidden sm:block">
                 Elevate raw intuition in <span className="text-[#287D54] dark:text-amber-300 font-medium font-mono">"{file.title}"</span> into a formal, textbook-grade companion note.
               </p>
             </div>
@@ -235,7 +235,7 @@ export default function NoteSynthesisModal({
 
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-[#666B65] dark:text-[#71717a] hover:text-[#242824] dark:hover:text-[#f4f4f5] hover:bg-[#F0F1ED] dark:hover:bg-[#222227] transition-colors"
+            className="p-1.5 rounded-lg text-[#666B65] dark:text-[#71717a] hover:text-[#242824] dark:hover:text-[#f4f4f5] hover:bg-[#F0F1ED] dark:hover:bg-[#222227] transition-colors shrink-0"
             title="Close (Esc)"
           >
             <X className="w-4 h-4" />

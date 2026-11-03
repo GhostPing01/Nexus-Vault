@@ -180,7 +180,7 @@ export default function Editor({
     return (
       <div className="flex-1 flex flex-col h-full bg-white dark:bg-[#15161A] select-none">
         {(!isSidebarOpen || onReturnToLanding) && (
-          <div className="h-12 border-b border-[#E3E5DF] dark:border-[#272A32] bg-[#F7F7F4] dark:bg-[#18191E] px-4 flex items-center justify-between shrink-0">
+          <div className="h-12 border-b border-[#E3E5DF] dark:border-[#272A32] bg-[#F7F7F4] dark:bg-[#18191E] px-3 sm:px-4 flex items-center justify-between shrink-0">
             <div className="flex items-center gap-2">
               {onToggleSidebar && !isSidebarOpen && (
                 <button
@@ -192,17 +192,28 @@ export default function Editor({
                   <PanelLeft className="w-4 h-4" />
                 </button>
               )}
-              {onReturnToLanding && !isSidebarOpen && (
+              {onReturnToLanding && (
                 <button
                   onClick={onReturnToLanding}
                   className="h-7 px-2.5 rounded-md bg-white dark:bg-[#1E1E22] hover:bg-[#F0F1ED] dark:hover:bg-[#27272E] text-[#666B65] dark:text-[#A1A1AA] hover:text-[#287D54] dark:hover:text-emerald-400 border border-[#E3E5DF] dark:border-[#272A32] text-xs font-medium flex items-center gap-1.5 cursor-pointer shadow-2xs transition-colors shrink-0 group"
                   title="Return to Website Overview"
                 >
                   <ArrowLeft className="w-3.5 h-3.5 text-[#287D54] dark:text-emerald-400 group-hover:-translate-x-0.5 transition-transform shrink-0" />
-                  <span>Website Overview</span>
+                  <span className="hidden sm:inline">Website Overview</span>
+                  <span className="sm:hidden">Overview</span>
                 </button>
               )}
             </div>
+            {onToggleRightPanel && (
+              <button
+                onClick={onToggleRightPanel}
+                className="p-1.5 rounded-md text-[#4A4F49] dark:text-[#A1A1AA] hover:text-[#242824] dark:hover:text-[#F4F4F5] hover:bg-[#E8EAE4] dark:hover:bg-[#202227] transition-colors cursor-pointer shrink-0"
+                title={isRightPanelOpen ? 'Hide Backlinks & Graph' : 'Show Backlinks & Graph'}
+                aria-label="Toggle right inspector panel"
+              >
+                <PanelRight className="w-4 h-4" />
+              </button>
+            )}
           </div>
         )}
         <div className="flex-1 flex flex-col items-center justify-center p-6 text-center text-[#878C85] dark:text-[#71717A]">
@@ -215,6 +226,15 @@ export default function Editor({
           <p className="text-xs text-[#878C85] dark:text-[#71717A] max-w-xs leading-relaxed">
             Select a note from the sidebar or click <kbd className="px-1.5 py-0.5 rounded bg-[#EAECE6] dark:bg-[#202227] border border-[#E3E5DF] dark:border-[#2E313B] font-mono text-[10px] text-[#4A4F49] dark:text-[#D4D4D8]">New</kbd> to begin.
           </p>
+          {onToggleSidebar && !isSidebarOpen && (
+            <button
+              onClick={onToggleSidebar}
+              className="mt-4 px-3.5 py-1.5 rounded-lg bg-[#287D54] hover:bg-[#1F6342] text-white text-xs font-medium md:hidden flex items-center gap-1.5 shadow-xs transition-colors cursor-pointer"
+            >
+              <PanelLeft className="w-3.5 h-3.5" />
+              <span>Browse Notes</span>
+            </button>
+          )}
         </div>
       </div>
     );
@@ -240,9 +260,9 @@ export default function Editor({
   return (
     <div className="flex-1 flex flex-col h-full bg-white dark:bg-[#15161A] overflow-hidden select-text">
       {/* Top Action Bar */}
-      <div className="h-12 border-b border-[#E3E5DF] dark:border-[#272A32] bg-[#F7F7F4] dark:bg-[#18191E] px-4 flex items-center justify-between gap-3 shrink-0 select-none">
+      <div className="h-12 border-b border-[#E3E5DF] dark:border-[#272A32] bg-[#F7F7F4] dark:bg-[#18191E] px-2.5 sm:px-4 flex items-center justify-between gap-1.5 sm:gap-3 shrink-0 select-none">
         {/* Left: Sidebar toggle, Note Title Input & Save Status */}
-        <div className="flex items-center gap-2.5 min-w-0 flex-1">
+        <div className="flex items-center gap-1.5 sm:gap-2.5 min-w-0 flex-1">
           {onToggleSidebar && (
             <button
               onClick={onToggleSidebar}
@@ -257,11 +277,11 @@ export default function Editor({
           {!isSidebarOpen && onReturnToLanding && (
             <button
               onClick={onReturnToLanding}
-              className="h-7 px-2.5 rounded-md bg-white dark:bg-[#1E1E22] hover:bg-[#F0F1ED] dark:hover:bg-[#27272E] text-[#666B65] dark:text-[#A1A1AA] hover:text-[#287D54] dark:hover:text-emerald-400 border border-[#E3E5DF] dark:border-[#272A32] text-xs font-medium flex items-center gap-1.5 cursor-pointer shadow-2xs transition-colors shrink-0 group"
+              className="h-7 px-2 sm:px-2.5 rounded-md bg-white dark:bg-[#1E1E22] hover:bg-[#F0F1ED] dark:hover:bg-[#27272E] text-[#666B65] dark:text-[#A1A1AA] hover:text-[#287D54] dark:hover:text-emerald-400 border border-[#E3E5DF] dark:border-[#272A32] text-xs font-medium flex items-center gap-1 cursor-pointer shadow-2xs transition-colors shrink-0 group"
               title="Return to Website Overview"
             >
               <ArrowLeft className="w-3.5 h-3.5 text-[#287D54] dark:text-emerald-400 group-hover:-translate-x-0.5 transition-transform shrink-0" />
-              <span className="hidden sm:inline font-medium">Website Overview</span>
+              <span className="hidden md:inline font-medium">Overview</span>
             </button>
           )}
 
@@ -273,11 +293,11 @@ export default function Editor({
               setSaveState('dirty');
             }}
             placeholder="Untitled Note..."
-            className="bg-transparent text-sm md:text-base font-semibold text-[#242824] dark:text-[#F4F4F5] focus:outline-none max-w-xs md:max-w-md truncate placeholder-[#878C85] dark:placeholder-[#71717A]"
+            className="bg-transparent text-sm sm:text-base font-semibold text-[#242824] dark:text-[#F4F4F5] focus:outline-none min-w-[70px] flex-1 max-w-xs sm:max-w-sm md:max-w-md truncate placeholder-[#878C85] dark:placeholder-[#71717A]"
           />
 
           {/* Unobtrusive Save Status */}
-          <div className="flex items-center gap-2 text-xs shrink-0">
+          <div className="flex items-center gap-1.5 text-xs shrink-0">
             {saveState === 'saving' && (
               <span className="flex items-center gap-1 text-[#E7A23B] dark:text-amber-400 font-medium">
                 <Clock className="w-3 h-3 animate-spin" />
@@ -291,7 +311,7 @@ export default function Editor({
               </span>
             )}
             {saveState === 'dirty' && (
-              <span className="text-[#878C85] dark:text-[#71717A] text-xs font-mono">• Unsaved</span>
+              <span className="text-[#878C85] dark:text-[#71717A] text-[11px] sm:text-xs font-mono">• Unsaved</span>
             )}
 
             <div className="hidden lg:flex items-center gap-1.5 text-xs text-[#4A4F49] dark:text-[#A1A1AA] border-l border-[#E3E5DF] dark:border-[#272A32] pl-2">
@@ -301,12 +321,12 @@ export default function Editor({
         </div>
 
         {/* Right: Action Controls */}
-        <div className="flex items-center gap-1.5 shrink-0">
+        <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
           {/* Save Button */}
           <button
             onClick={handleManualSave}
             disabled={saveState === 'saved'}
-            className="h-7 px-2.5 rounded-md bg-white dark:bg-[#1E1E22] hover:bg-[#F0F1ED] dark:hover:bg-[#27272E] text-[#242824] dark:text-[#D4D4D8] disabled:opacity-35 transition-colors border border-[#E3E5DF] dark:border-[#272A32] text-xs font-medium flex items-center gap-1 cursor-pointer shadow-2xs"
+            className="h-7 px-2 sm:px-2.5 rounded-md bg-white dark:bg-[#1E1E22] hover:bg-[#F0F1ED] dark:hover:bg-[#27272E] text-[#242824] dark:text-[#D4D4D8] disabled:opacity-35 transition-colors border border-[#E3E5DF] dark:border-[#272A32] text-xs font-medium flex items-center gap-1 cursor-pointer shadow-2xs shrink-0"
             title="Save Note (Ctrl+S)"
           >
             <Save className="w-3.5 h-3.5 text-[#4A4F49] dark:text-[#A1A1AA]" />
@@ -316,11 +336,11 @@ export default function Editor({
           {/* AI / Robot Model & API Key Configuration Button (Right next to Save button) */}
           <button
             onClick={onOpenAIConfig}
-            className="h-7 px-2.5 rounded-md bg-white dark:bg-[#1E1E22] hover:bg-[#F0F1ED] dark:hover:bg-[#27272E] text-[#242824] dark:text-[#D4D4D8] border border-[#E3E5DF] dark:border-[#272A32] text-xs font-medium flex items-center gap-1.5 cursor-pointer shadow-2xs transition-colors group relative"
+            className="h-7 px-2 sm:px-2.5 rounded-md bg-white dark:bg-[#1E1E22] hover:bg-[#F0F1ED] dark:hover:bg-[#27272E] text-[#242824] dark:text-[#D4D4D8] border border-[#E3E5DF] dark:border-[#272A32] text-xs font-medium flex items-center gap-1 cursor-pointer shadow-2xs transition-colors group relative shrink-0"
             title={`Configure AI Models & API Keys (Active: ${activeProviderLabel})`}
           >
             <Bot className="w-3.5 h-3.5 text-[#287D54] dark:text-emerald-400 group-hover:scale-110 transition-transform" />
-            <span className="hidden sm:inline font-medium">AI Model</span>
+            <span className="hidden md:inline font-medium">AI Model</span>
             {hasActiveKey && (
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" title="Active API key configured" />
             )}
@@ -330,15 +350,15 @@ export default function Editor({
           {onOpenSynthesis && (
             <button
               onClick={() => onOpenSynthesis(file)}
-              className="h-7 px-2.5 rounded-md bg-[#FEF7EC] dark:bg-[#2B2317] hover:bg-[#FDEED3] dark:hover:bg-[#382C1B] text-[#9A6214] dark:text-amber-300 border border-[#E7A23B]/40 dark:border-amber-500/35 text-xs font-medium flex items-center gap-1.5 transition-colors cursor-pointer shadow-2xs"
+              className="h-7 px-2 sm:px-2.5 rounded-md bg-[#FEF7EC] dark:bg-[#2B2317] hover:bg-[#FDEED3] dark:hover:bg-[#382C1B] text-[#9A6214] dark:text-amber-300 border border-[#E7A23B]/40 dark:border-amber-500/35 text-xs font-medium flex items-center gap-1 transition-colors cursor-pointer shadow-2xs shrink-0"
               title={
                 isFormalNote
                   ? `Re-synthesize this formal companion note with ${activeProviderLabel}`
                   : `Synthesize raw note into textbook-grade formal note with ${activeProviderLabel}`
               }
             >
-              <Sparkles className="w-3.5 h-3.5 text-[#E7A23B] dark:text-amber-400" />
-              <span>{isFormalNote ? 'Regenerate Formal' : 'Synthesize Note'}</span>
+              <Sparkles className="w-3.5 h-3.5 text-[#E7A23B] dark:text-amber-400 shrink-0" />
+              <span className="hidden sm:inline">{isFormalNote ? 'Regenerate Formal' : 'Synthesize Note'}</span>
             </button>
           )}
 
@@ -346,26 +366,26 @@ export default function Editor({
           <button
             onClick={() => onProcessAI(file.id)}
             disabled={isAIProcessing}
-            className="h-7 px-2.5 rounded-md bg-white dark:bg-[#1E1E24] hover:bg-[#F0F1ED] dark:hover:bg-[#27272E] text-[#242824] dark:text-[#E4E4E7] border border-[#E3E5DF] dark:border-[#272A32] text-xs font-medium flex items-center gap-1.5 transition-colors cursor-pointer shadow-2xs disabled:opacity-40"
+            className="h-7 px-2 sm:px-2.5 rounded-md bg-white dark:bg-[#1E1E24] hover:bg-[#F0F1ED] dark:hover:bg-[#27272E] text-[#242824] dark:text-[#E4E4E7] border border-[#E3E5DF] dark:border-[#272A32] text-xs font-medium flex items-center gap-1 transition-colors cursor-pointer shadow-2xs disabled:opacity-40 shrink-0"
             title={`Discover AI link recommendations with ${activeProviderLabel}`}
           >
             {isAIProcessing ? (
               <span className="w-3 h-3 border-2 border-[#287D54] border-t-transparent rounded-full animate-spin" />
             ) : (
-              <Link2 className="w-3.5 h-3.5 text-[#287D54] dark:text-emerald-400" />
+              <Link2 className="w-3.5 h-3.5 text-[#287D54] dark:text-emerald-400 shrink-0" />
             )}
-            <span className="hidden sm:inline">{isAIProcessing ? 'Discovering...' : 'Discover Links'}</span>
+            <span className="hidden md:inline">{isAIProcessing ? 'Discovering...' : 'Discover Links'}</span>
           </button>
 
           {/* Toggle Fullscreen Graph View */}
           {onOpenFullGraph && (
             <button
               onClick={onOpenFullGraph}
-              className="h-7 px-2.5 rounded-md bg-white dark:bg-[#1E1E24] hover:bg-[#F0F1ED] dark:hover:bg-[#27272E] text-[#242824] dark:text-[#D4D4D8] border border-[#E3E5DF] dark:border-[#272A32] text-xs font-medium flex items-center gap-1 cursor-pointer shadow-2xs"
+              className="h-7 px-2 sm:px-2.5 rounded-md bg-white dark:bg-[#1E1E24] hover:bg-[#F0F1ED] dark:hover:bg-[#27272E] text-[#242824] dark:text-[#D4D4D8] border border-[#E3E5DF] dark:border-[#272A32] text-xs font-medium flex items-center gap-1 cursor-pointer shadow-2xs shrink-0"
               title="Expand to Fullscreen Graph (G)"
             >
-              <Network className="w-3.5 h-3.5 text-[#287D54] dark:text-emerald-400" />
-              <span className="hidden sm:inline">Graph</span>
+              <Network className="w-3.5 h-3.5 text-[#287D54] dark:text-emerald-400 shrink-0" />
+              <span className="hidden lg:inline">Graph</span>
             </button>
           )}
 
@@ -373,7 +393,7 @@ export default function Editor({
           {onToggleRightPanel && (
             <button
               onClick={onToggleRightPanel}
-              className="p-1.5 rounded-md text-[#4A4F49] dark:text-[#A1A1AA] hover:text-[#242824] dark:hover:text-[#F4F4F5] hover:bg-[#E8EAE4] dark:hover:bg-[#202227] transition-colors cursor-pointer shrink-0 ml-0.5"
+              className="p-1.5 rounded-md text-[#4A4F49] dark:text-[#A1A1AA] hover:text-[#242824] dark:hover:text-[#F4F4F5] hover:bg-[#E8EAE4] dark:hover:bg-[#202227] transition-colors cursor-pointer shrink-0"
               title={isRightPanelOpen ? 'Hide Backlinks & Graph' : 'Show Backlinks & Graph'}
               aria-label="Toggle right inspector panel"
             >
@@ -385,25 +405,25 @@ export default function Editor({
 
       {/* Subtle Companion Relationship Bar */}
       {companion && onNavigateToFile && (
-        <div className="h-7 px-4 bg-[#F7F7F4] dark:bg-[#17181C] border-b border-[#E3E5DF] dark:border-[#272A32] flex items-center justify-between text-xs shrink-0 select-none">
-          <div className="flex items-center gap-2 truncate">
-            <span className="text-xs font-mono px-1.5 py-0.5 rounded bg-[#E3E5DF] dark:bg-[#272A32] text-[#4A4F49] dark:text-[#A1A1AA] font-medium">
-              {isFormalNote ? 'Formal Companion' : 'Raw Notes'}
+        <div className="h-7 px-3 sm:px-4 bg-[#F7F7F4] dark:bg-[#17181C] border-b border-[#E3E5DF] dark:border-[#272A32] flex items-center justify-between text-xs shrink-0 select-none overflow-x-auto no-scrollbar">
+          <div className="flex items-center gap-1.5 sm:gap-2 truncate min-w-0">
+            <span className="text-[10px] sm:text-xs font-mono px-1.5 py-0.5 rounded bg-[#E3E5DF] dark:bg-[#272A32] text-[#4A4F49] dark:text-[#A1A1AA] font-medium shrink-0">
+              {isFormalNote ? 'Formal' : 'Raw'}
             </span>
-            <span className="text-[#4A4F49] dark:text-[#A1A1AA] text-xs">
+            <span className="text-[#4A4F49] dark:text-[#A1A1AA] text-xs hidden sm:inline shrink-0">
               {isFormalNote ? 'Derived from original note:' : 'Companion textbook note:'}
             </span>
             <button
               onClick={() => onNavigateToFile(companion.id)}
-              className="font-medium text-[#287D54] dark:text-emerald-400 hover:underline flex items-center gap-1 truncate cursor-pointer"
+              className="font-medium text-[#287D54] dark:text-emerald-400 hover:underline flex items-center gap-1 truncate cursor-pointer min-w-0"
               title={`Switch to ${companion.title}`}
             >
-              <span className="truncate">"{companion.title}"</span>
+              <span className="truncate max-w-[140px] sm:max-w-xs">"{companion.title}"</span>
               <ExternalLink className="w-3 h-3 shrink-0" />
             </button>
           </div>
 
-          <span className="text-xs text-[#4A4F49] dark:text-[#71717A] font-mono hidden md:inline">
+          <span className="text-xs text-[#4A4F49] dark:text-[#71717A] font-mono hidden md:inline shrink-0 pl-2">
             Linked in Graph
           </span>
         </div>

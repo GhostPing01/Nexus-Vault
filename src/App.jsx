@@ -509,7 +509,7 @@ export default function App() {
       <div
         className={`${
           isSidebarOpen
-            ? 'fixed inset-y-0 left-0 z-40 w-72 md:relative md:w-64 md:z-auto md:flex shrink-0 h-full shadow-xl md:shadow-none'
+            ? 'fixed inset-y-0 left-0 z-40 w-72 max-w-[85vw] md:relative md:w-64 md:z-auto md:flex shrink-0 h-full shadow-2xl md:shadow-none animate-in slide-in-from-left duration-200'
             : 'hidden'
         }`}
       >
@@ -548,9 +548,21 @@ export default function App() {
           theme={theme}
           onToggleTheme={toggleTheme}
           isSidebarOpen={isSidebarOpen}
-          onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
+          onToggleSidebar={() => {
+            const next = !isSidebarOpen;
+            setIsSidebarOpen(next);
+            if (next && typeof window !== 'undefined' && window.innerWidth < 768) {
+              setIsRightPanelOpen(false);
+            }
+          }}
           isRightPanelOpen={isRightPanelOpen}
-          onToggleRightPanel={() => setIsRightPanelOpen(!isRightPanelOpen)}
+          onToggleRightPanel={() => {
+            const next = !isRightPanelOpen;
+            setIsRightPanelOpen(next);
+            if (next && typeof window !== 'undefined' && window.innerWidth < 1024) {
+              setIsSidebarOpen(false);
+            }
+          }}
           onReturnToLanding={handleReturnToLanding}
         />
       </ErrorBoundary>
@@ -568,7 +580,7 @@ export default function App() {
       <div
         className={`${
           isRightPanelOpen
-            ? 'fixed inset-y-0 right-0 z-40 w-80 lg:relative lg:z-auto lg:flex flex-col h-full bg-[#F0F1ED] dark:bg-[#151518] border-l border-[#E3E5DF] dark:border-[#26262c] overflow-hidden shrink-0 shadow-xl lg:shadow-none'
+            ? 'fixed inset-y-0 right-0 z-40 w-80 max-w-[90vw] lg:relative lg:z-auto lg:flex flex-col h-full bg-[#F0F1ED] dark:bg-[#151518] border-l border-[#E3E5DF] dark:border-[#26262c] overflow-hidden shrink-0 shadow-2xl lg:shadow-none animate-in slide-in-from-right duration-200'
             : 'hidden'
         }`}
       >

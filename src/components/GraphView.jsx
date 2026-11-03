@@ -73,7 +73,17 @@ export default function GraphView({
     updateBounds();
     const handleResize = () => updateBounds();
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    
+    let observer;
+    if (containerRef.current && typeof ResizeObserver !== 'undefined') {
+      observer = new ResizeObserver(() => updateBounds());
+      observer.observe(containerRef.current);
+    }
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      if (observer) observer.disconnect();
+    };
   }, [isFullscreen]);
 
   // When collapsing / expanding the graph in sidebar, smoothly recalculate bounds
@@ -280,27 +290,27 @@ export default function GraphView({
       {/* Header Toolbar */}
       {isFullscreen ? (
         /* MAXIMIZED HEADER - FULL TOOLBAR */
-        <div className="h-13 px-5 bg-[#141417] border-b border-[#26262c] flex items-center justify-between shrink-0 gap-3">
+        <div className="h-auto min-h-[52px] py-2 px-3 sm:px-5 bg-[#141417] border-b border-[#26262c] flex flex-wrap items-center justify-between shrink-0 gap-2 sm:gap-3 select-none">
           {/* Left Section: Title + Perspective Switcher + Metrics */}
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 pr-3 border-r border-[#26262c]">
-              <div className="w-7 h-7 rounded-lg bg-purple-500/15 border border-purple-500/25 flex items-center justify-center text-purple-400">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+            <div className="flex items-center gap-1.5 sm:gap-2 pr-2 sm:pr-3 border-r border-[#26262c] shrink-0">
+              <div className="w-7 h-7 rounded-lg bg-purple-500/15 border border-purple-500/25 flex items-center justify-center text-purple-400 shrink-0">
                 <Network className="w-4 h-4" />
               </div>
-              <span className="font-semibold text-xs text-[#f4f4f5]">Vault Knowledge Graph</span>
+              <span className="font-semibold text-xs text-[#f4f4f5] hidden xs:inline">Vault Knowledge Graph</span>
               <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-purple-500/15 text-purple-300 border border-purple-500/25 font-semibold">
                 Full Screen
               </span>
             </div>
 
             {/* Perspective Switcher - ONLY ON MAXIMIZED VIEW */}
-            <div className="flex items-center p-0.5 bg-[#1b1b1f] border border-[#26262c] rounded-lg text-xs">
+            <div className="flex items-center p-0.5 bg-[#1b1b1f] border border-[#26262c] rounded-lg text-xs shrink-0">
               <button
                 onClick={() => {
                   setPerspective('local');
                   setSearchQuery('');
                 }}
-                className={`flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium transition-all cursor-pointer ${
+                className={`flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 rounded-md text-xs font-medium transition-all cursor-pointer ${
                   perspective === 'local'
                     ? 'bg-[#27272e] text-[#f4f4f5] shadow-sm'
                     : 'text-[#8e8e98] hover:text-[#d4d4d8]'
@@ -312,7 +322,7 @@ export default function GraphView({
               </button>
               <button
                 onClick={() => setPerspective('global')}
-                className={`flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium transition-all cursor-pointer ${
+                className={`flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 rounded-md text-xs font-medium transition-all cursor-pointer ${
                   perspective === 'global'
                     ? 'bg-[#27272e] text-[#f4f4f5] shadow-sm'
                     : 'text-[#8e8e98] hover:text-[#d4d4d8]'
@@ -324,22 +334,22 @@ export default function GraphView({
               </button>
             </div>
 
-            <span className="text-xs text-[#71717a] font-mono hidden md:inline">
+            <span className="text-xs text-[#71717a] font-mono hidden md:inline truncate">
               {safeGraphData.nodes.length} notes • {safeGraphData.links.length} connections
             </span>
           </div>
 
           {/* Right Section: Search, AI Toggle, Zoom Controls, Minimize */}
-          <div className="flex items-center gap-2 ml-auto">
+          <div className="flex items-center gap-1.5 sm:gap-2 ml-auto shrink-0">
             {/* Search Bar */}
-            <div className="flex items-center bg-[#1c1c20] border border-[#2e2e36] focus-within:border-purple-500/50 rounded-lg px-2.5 py-1">
-              <Search className="w-3.5 h-3.5 text-purple-400 mr-2 shrink-0" />
+            <div className="flex items-center bg-[#1c1c20] border border-[#2e2e36] focus-within:border-purple-500/50 rounded-lg px-2 sm:px-2.5 py-1">
+              <Search className="w-3.5 h-3.5 text-purple-400 mr-1.5 sm:mr-2 shrink-0" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Find note in graph..."
-                className="w-36 md:w-52 bg-transparent text-xs text-[#f4f4f5] focus:outline-none placeholder-[#71717a]"
+                placeholder="Find note..."
+                className="w-24 sm:w-36 md:w-52 bg-transparent text-xs text-[#f4f4f5] focus:outline-none placeholder-[#71717a]"
               />
               {searchQuery && (
                 <button
@@ -355,7 +365,7 @@ export default function GraphView({
             {onToggleShowAILinks && (
               <button
                 onClick={() => onToggleShowAILinks(!showAILinks)}
-                className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-mono border transition-all cursor-pointer ${
+                className={`flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-1 rounded-md text-xs font-mono border transition-all cursor-pointer ${
                   showAILinks
                     ? 'bg-amber-500/20 text-amber-300 border-amber-500/40 shadow-sm'
                     : 'bg-[#1b1b1f] text-[#71717a] border-[#2e2e36] hover:text-[#a1a1aa]'
@@ -363,43 +373,45 @@ export default function GraphView({
                 title={`Toggle AI recommended links on graph (Currently ${showAILinks ? 'ON' : 'OFF'})`}
               >
                 <span className={`w-1.5 h-1.5 rounded-full ${showAILinks ? 'bg-amber-400 animate-pulse' : 'bg-[#52525b]'}`} />
-                <span>AI Graph: {showAILinks ? 'ON' : 'OFF'}</span>
+                <span className="hidden sm:inline">AI Graph: </span>
+                <span>{showAILinks ? 'ON' : 'OFF'}</span>
               </button>
             )}
 
             {/* Zoom In, Zoom Out, Reset - ONLY ON MAXIMIZED VIEW */}
-            <div className="flex items-center gap-1 border-l border-[#26262c] pl-2">
+            <div className="flex items-center gap-0.5 sm:gap-1 border-l border-[#26262c] pl-1.5 sm:pl-2">
               <button
                 onClick={handleZoomIn}
-                className="p-1.5 hover:bg-[#232328] text-[#8e8e98] hover:text-[#f4f4f5] rounded-md transition-colors cursor-pointer"
+                className="p-1 sm:p-1.5 hover:bg-[#232328] text-[#8e8e98] hover:text-[#f4f4f5] rounded-md transition-colors cursor-pointer"
                 title="Zoom In"
               >
-                <ZoomIn className="w-4 h-4" />
+                <ZoomIn className="w-3.5 sm:w-4 h-3.5 sm:h-4" />
               </button>
               <button
                 onClick={handleZoomOut}
-                className="p-1.5 hover:bg-[#232328] text-[#8e8e98] hover:text-[#f4f4f5] rounded-md transition-colors cursor-pointer"
+                className="p-1 sm:p-1.5 hover:bg-[#232328] text-[#8e8e98] hover:text-[#f4f4f5] rounded-md transition-colors cursor-pointer"
                 title="Zoom Out"
               >
-                <ZoomOut className="w-4 h-4" />
+                <ZoomOut className="w-3.5 sm:w-4 h-3.5 sm:h-4" />
               </button>
               <button
                 onClick={handleReset}
-                className="p-1.5 hover:bg-[#232328] text-[#8e8e98] hover:text-[#f4f4f5] rounded-md transition-colors cursor-pointer"
+                className="p-1 sm:p-1.5 hover:bg-[#232328] text-[#8e8e98] hover:text-[#f4f4f5] rounded-md transition-colors cursor-pointer"
                 title="Reset Graph Layout"
               >
-                <RefreshCw className="w-4 h-4" />
+                <RefreshCw className="w-3.5 sm:w-4 h-3.5 sm:h-4" />
               </button>
             </div>
 
             {/* Minimize / Exit Fullscreen Button */}
             <button
               onClick={() => setIsFullscreen(false)}
-              className="flex items-center gap-1.5 px-3.5 py-1.5 bg-[#27272e] hover:bg-[#34343d] text-[#f4f4f5] border border-[#3e3e4a] rounded-lg text-xs font-semibold transition-all shadow-sm ml-1 cursor-pointer"
+              className="flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3.5 py-1.5 bg-[#27272e] hover:bg-[#34343d] text-[#f4f4f5] border border-[#3e3e4a] rounded-lg text-xs font-semibold transition-all shadow-sm ml-1 cursor-pointer shrink-0"
               title="Minimize back to sidebar (Esc)"
             >
               <Minimize2 className="w-3.5 h-3.5 text-purple-400" />
-              <span>Minimize (Esc)</span>
+              <span className="hidden sm:inline">Minimize</span>
+              <span className="sm:hidden">Exit</span>
             </button>
           </div>
         </div>

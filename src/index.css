@@ -97,10 +97,32 @@
 }
 
 .cm-editor .cm-content {
-  padding: 2.5rem 3.5rem !important;
+  padding: 1.25rem 1rem 8rem 1rem !important;
   color: #242824 !important;
   max-width: 740px !important;
   margin: 0 auto !important;
+}
+
+@media (min-width: 640px) {
+  .cm-editor .cm-content {
+    padding: 2rem 2rem 8rem 2rem !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .cm-editor .cm-content {
+    padding: 2.5rem 3.5rem 8rem 3.5rem !important;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
 
 .dark .cm-editor .cm-content {
