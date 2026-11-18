@@ -1,0 +1,2 @@
+# Graph Theory
+[[Linear Algebra]]
